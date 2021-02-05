@@ -1,0 +1,47 @@
+{% extends "includes/jottle_base.html" %}
+
+{% block title %}: {% if path == "" %}/{% else %}{{ path }}{% endif %}{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/jottle_files.js"></script>
+{% endblock %}
+
+{% block menu %}
+<div id="menu">
+    {% if path == "" %}
+    <span class="btn inactive_link">..</span>
+    {% else %}
+    <a class="btn btn-info" href="/{{ parent }}">..</a>
+    {% endif %}
+
+    <a class="btn btn-outline-primary" href="#" onclick="makeDir(); return false;">New dir</a>
+    <a class="btn btn-outline-primary" href="#" onclick="makeFile(); return false;">New file</a>
+
+    {% if path == "" %}
+    <span class="btn inactive_link">Rename</span>
+    <span class="btn inactive_link">Delete</span>
+    {% else %}
+    <a class="btn btn-warning" href="#" onclick="rename(); return false;">Rename</a>
+    <a class="btn btn-danger" href="#" onclick="del('dir'); return false;">Delete</a>
+    {% endif %}
+
+    <hr>
+</div>a
+{% endblock %}
+
+{% block content %}
+<h2 class="directory_header">/{{ path }}</h2>
+
+<ul class="dirs">
+    {% for d in dirs %}
+    <li><a href="{{ d.path_url }}">{{ d.name }}/</a></li>
+    {% endfor %}
+</ul>
+
+</ul>
+<ul class="files">
+    {% for f in files %}
+    <li><a href="{{ f.path_url }}">{{ f.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

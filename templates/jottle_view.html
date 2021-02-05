@@ -1,0 +1,28 @@
+{% extends "includes/jottle_base.html" %}
+
+{% block title %}: {{ file_url }}{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/jottle_files.js" charset="utf-8"></script>
+<link rel="stylesheet" href="/static/css/highlightjs/9.12.0/default.min.css">
+<script src="/static/js/highlightjs/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+{% endblock %}
+
+{% block menu %}
+<div id="menu">
+
+    <a class="btn btn-info" href="{{ parent_url }}">..</a>
+    <a class="btn btn-primary" href="{{ file_url }}?edit">Edit</a>
+    <a class="btn btn-warning" href="#" onclick="rename(); return false;">Rename</a>
+    <a class="btn btn-danger" href="#" onclick="del('file'); return false;">Delete</a>
+    <hr>
+
+</div>
+{% endblock %}
+
+{% block content %}
+{{ content|safe }}
+{% endblock %}
+

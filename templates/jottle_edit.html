@@ -1,0 +1,40 @@
+{% extends "includes/jottle_base.html" %}
+
+{% block title %}: {{ path }}{% endblock %}
+
+{% block scripts %}
+
+<script src="/static/js/acejs/1.2.8/ace.js"></script>
+<script src="/static/js/acejs/1.2.8/ext-modelist.js"></script>
+
+<script src="/static/js/jottle_files.js" charset="utf-8"></script>
+<script src="/static/js/jottle_edit.js" charset="utf-8"></script>
+
+<script type="text/javascript"> function confirmSaveAlert() {
+   alert("The file has been saved!");
+}
+
+</script>
+
+{% endblock %}
+
+{% block menu %}
+<div id="menu">
+
+    <a class="btn btn-info" href="{{ path }}">View</a>
+    <a class="btn btn-success" href="#" onclick="save(); javascript:confirmSaveAlert(); return false;">Save</a>
+    <a class="btn btn-warning disabled" href="#" onclick="rename(); return false;">Rename</a>
+    <a class="btn btn-danger disabled" href="#" onclick="del('file'); return false;">Delete</a>
+    <hr>
+
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<h3 id="file_header">{{ path }} <span id="save_message"></span></h3>
+
+<div id="editor">{{ content }}</div>
+
+{% endblock %}
