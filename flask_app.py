@@ -5,14 +5,15 @@ from werkzeug.utils import redirect
 
 import filehelpers as fh
 
+from config import app_settings
 app = Flask(__name__)
 
 
 def _make_filepath(path):
-    root_dir = "C:/tmp"
+    root_dir = app_settings["root"]
     return os.path.join(root_dir, path)
 
-jottle_base_url = "/admin/update-query/"
+base_url = app_settings["base_url"]
 
 def jottle_browse(path):
     File = namedtuple("File", "path_url name")
@@ -21,7 +22,7 @@ def jottle_browse(path):
     parent, _ = os.path.split(path)
 
     for name in os.listdir(_make_filepath(path)):
-        path_url = jottle_base_url + os.path.join(path, name)
+        path_url = base_url + os.path.join(path, name)
         f = File(path_url, name)
         if os.path.isdir(_make_filepath(f.path_url[1:])):
             dirs.append(f)
@@ -34,7 +35,7 @@ def jottle_browse(path):
 def jottle_edit(path):
     with open(_make_filepath(path), 'r') as f:
         content = f.read()
-    path_url = jottle_base_url + path
+    path_url = base_url + path
     return render_template("jottle_edit.html", content=content, path=path_url)
 
 
@@ -43,13 +44,13 @@ def jottle_view(path):
     with open(_make_filepath(path), 'r') as f:
         content = "<pre><code>{}</code></pre>".format(f.read())
     parent_url, filename = os.path.split(path)
-    parent_url = jottle_base_url + parent_url
-    file_url = jottle_base_url + path
+    parent_url = base_url + parent_url
+    file_url = base_url + path
     return render_template("jottle_view.html", content=content, parent_url=parent_url, file_url=file_url)
 
 
-@app.route("/admin/update-query/", methods=["GET", "POST"])
-@app.route("/admin/update-query/<path:path>", methods=["GET", "POST"])
+@app.route(base_url, methods=["GET", "POST"])
+@app.route(f"{base_url}<path:path>", methods=["GET", "POST"])
 def index(path="", access_role=("it")):
     filepath = _make_filepath(path)
 

@@ -1,0 +1,12 @@
+{
+    "application":{
+        "root": "c:/tmp",
+        "base_url": "/admin/"
+    },
+    "database":{
+        "MYSQL_HOST":"localhost",
+        "MYSQL_USER": "user_name",
+        "MYSQL_PASSWORD":"password",
+        "MYSQL_DB":"database_name"
+    }
+}
